@@ -70,3 +70,80 @@ burst_time[i];
  
     return 0; 
 } 
+
+/*
+------------------------------------------------------------
+🧠 PROGRAM EXPLANATION — ROUND ROBIN CPU SCHEDULING
+------------------------------------------------------------
+
+🔹 ALGORITHM USED:
+   This program implements the **Round Robin (RR) CPU Scheduling Algorithm**.
+   Round Robin is a **preemptive** process scheduling method used in time-sharing systems.
+   Each process is assigned a fixed CPU time slot called the **Time Quantum (TQ)**.
+   Processes are executed in a cyclic order, ensuring fairness and no starvation.
+
+------------------------------------------------------------
+⚙️ LOGIC USED IN THE CODE:
+
+1. INPUT PHASE:
+   - User enters total number of processes.
+   - For each process, input:
+       ➤ Arrival Time
+       ➤ Burst Time
+   - Store burst times in a temporary array `temp[]` for manipulation.
+   - Input the Time Quantum.
+
+2. EXECUTION PHASE:
+   - Initialize `total = 0` (current time) and `x = number of processes`.
+   - Iterate through the process list repeatedly (cyclically) until all processes finish.
+   - For each process:
+       ➤ If remaining burst time ≤ time quantum → execute and complete process.
+       ➤ Else → execute for one time quantum, reduce remaining time, and move to next.
+   - Track completion time using `total`.
+   - When a process finishes, calculate:
+         Turnaround Time = total - arrival_time[i]
+         Waiting Time    = Turnaround Time - burst_time[i]
+   - Accumulate total waiting and turnaround times for averages.
+
+3. OUTPUT PHASE:
+   - Display each process with:
+         Process ID | Burst Time | Turnaround Time | Waiting Time
+   - Finally, print:
+         ➤ Average Waiting Time
+         ➤ Average Turnaround Time
+
+------------------------------------------------------------
+📊 EXAMPLE INPUT / OUTPUT:
+
+Example Input:
+---------------
+Enter Total Number of Processes: 3
+Enter Details of Process[1]
+Arrival Time: 0
+Burst Time: 5
+Enter Details of Process[2]
+Arrival Time: 1
+Burst Time: 4
+Enter Details of Process[3]
+Arrival Time: 2
+Burst Time: 2
+Enter Time Quantum: 2
+
+Example Output:
+---------------
+Process   Burst Time   Turnaround Time   Waiting Time
+P[1]      5            11                6
+P[2]      4            10                6
+P[3]      2            4                 2
+
+Average Waiting Time:     4.666667
+Average Turnaround Time:  8.333333
+
+------------------------------------------------------------
+✅ SUMMARY:
+   ➤ Scheduling Type: Preemptive
+   ➤ Algorithm: Round Robin
+   ➤ Purpose: Fair CPU sharing among all processes
+   ➤ Key Concept: Each process executes for a fixed time quantum in cyclic order
+------------------------------------------------------------
+*/
