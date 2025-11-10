@@ -70,4 +70,101 @@ puts("SERVER CLOSED");
 close(fd); 
 close(fd2); 
 return 0; 
+
 } 
+
+/*
+--------------------------------------------------------------------------------
+Program: Inter-Process Communication using Named Pipes (FIFOs)
+--------------------------------------------------------------------------------
+Algorithm Used:
+    This program demonstrates **Inter-Process Communication (IPC)** using 
+    **Named Pipes (FIFOs)** between a **Client** and a **Server** process.
+
+Concept:
+    - FIFOs (First In First Out) are special types of files that allow unrelated 
+      processes to communicate with each other using a shared name in the file 
+      system.
+    - One process writes data to the FIFO (writer), and another process reads 
+      from it (reader).
+    - This example uses two FIFOs for **bidirectional communication**:
+          • fifo6.txt → For Server → Client communication (Server writes, Client reads)
+          • fifo7.txt → For Client → Server communication (Client writes, Server reads)
+
+--------------------------------------------------------------------------------
+Logic Explanation:
+
+1. **Server Process:**
+      - Opens fifo6.txt for writing and fifo7.txt for reading.
+      - Prompts the user to enter a message.
+      - Sends (writes) the message and its length to the client via fifo6.txt.
+      - Waits for a response from the client on fifo7.txt.
+      - Reads the response (processed string) and displays it.
+
+2. **Client Process:**
+      - Creates the FIFOs if they do not already exist.
+      - Opens fifo6.txt for reading and fifo7.txt for writing.
+      - Reads the message length and content sent by the server.
+      - Processes the received string by:
+            → Counting the number of words
+            → Counting the number of characters
+            → Counting the number of lines
+      - Constructs a result string containing these counts.
+      - Sends this result string (and its length) back to the server via fifo7.txt.
+
+3. **Communication Flow:**
+      Server → sends message → fifo6.txt → Client  
+      Client → processes and sends back result → fifo7.txt → Server
+
+4. **Termination:**
+      - Entering a blank message (pressing ENTER without input) can terminate
+        the communication loop.
+      - Both processes then close the FIFOs and exit gracefully.
+
+--------------------------------------------------------------------------------
+Example Input/Output:
+
+**Server Side (Input & Output):**
+------------------------------------
+Server
+FIFO OPEN
+
+        Enter the Message to be passed (hitting ENTER without any string will terminate program): 
+        Hello ChatGPT
+        This is a FIFO test message!
+
+Server Received:  No.of Words : 7::: No.of Characters: 38::: No.of Lines: 2
+
+------------------------------------
+
+**Client Side (Processing):**
+------------------------------------
+	Client - Listening
+	mkfifo6 returned an error-file may already exist
+	mkfifo7 returned an error-file may already exist
+	FIFO OPEN
+
+	Client Received: Hello ChatGPT
+	This is a FIFO test message!
+
+	String:  No.of Words : 7::: No.of Characters: 38::: No.of Lines: 2
+------------------------------------
+
+--------------------------------------------------------------------------------
+Explanation of Output:
+    - The Server sends the message to the Client.
+    - The Client counts:
+         → Words: Number of space-separated elements
+         → Characters: Total characters (excluding null terminator)
+         → Lines: Number of newline characters
+    - The Client sends this data back to the Server, which displays the result.
+
+--------------------------------------------------------------------------------
+Summary:
+    - This program showcases **bidirectional IPC** using **two FIFOs**.
+    - Demonstrates **synchronization** and **data exchange** between two 
+      independent processes.
+    - Useful in operating systems and networking for message passing between 
+      processes without using sockets.
+--------------------------------------------------------------------------------
+*/
