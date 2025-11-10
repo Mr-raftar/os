@@ -66,3 +66,102 @@ int main()
  
     return 0; 
 } 
+
+/*
+------------------------------------------------------------
+PROGRAM EXPLANATION:
+------------------------------------------------------------
+This program demonstrates the **Readers–Writers Problem** using 
+**POSIX threads (pthreads)** and **mutex locks** in C.
+
+------------------------------------------------------------
+ALGORITHM USED:
+------------------------------------------------------------
+→ The algorithm implemented is the **First Readers–Writers Problem** 
+  using **mutex synchronization** (pthread_mutex).
+
+→ It ensures that:
+   - Multiple readers can read the shared resource simultaneously.
+   - Writers get exclusive access to the resource (only one writer 
+     can write at a time, and no readers can read during writing).
+   - Prevents data inconsistency due to concurrent access.
+
+------------------------------------------------------------
+LOGIC / WORKING OF THE PROGRAM:
+------------------------------------------------------------
+1. Two mutex locks are used:
+   - **x**: Used to ensure mutual exclusion when updating `readcount`.
+   - **wsem**: Ensures writers get exclusive access.
+
+2. Variables:
+   - `readcount`: Tracks how many readers are currently accessing 
+     the shared resource.
+
+3. **Reader Thread Behavior:**
+   - Tries to enter (locks `x`), increments `readcount`.
+   - If it’s the first reader, it locks `wsem` (blocking writers).
+   - Reads the data (simulated using `sleep()`).
+   - After reading, decrements `readcount`.
+   - If it’s the last reader to leave, unlocks `wsem` (allowing writers).
+
+4. **Writer Thread Behavior:**
+   - Tries to enter (locks `wsem`).
+   - Performs write operation (simulated using `sleep()`).
+   - Unlocks `wsem` after writing (allowing readers/writers).
+
+5. **Thread Creation:**
+   - The user specifies the number of readers and writers.
+   - Reader and writer threads are created and executed concurrently.
+
+6. **Thread Synchronization:**
+   - Mutex locks ensure there’s no race condition between threads.
+   - Multiple readers can read together, but writers always get exclusive access.
+
+------------------------------------------------------------
+EXAMPLE INPUT / OUTPUT:
+------------------------------------------------------------
+Example Input:
+---------------
+Enter the number of readers: 3
+Enter the number of writers: 2
+
+Example Output (sample run, actual order may vary due to concurrency):
+---------------------------------------------------------------------
+Reader is trying to enter
+1 Reader(s) are inside
+Reader is trying to enter
+2 Reader(s) are inside
+Writer is trying to enter
+Reader is leaving
+Reader is leaving
+Writer has entered
+Writer is leaving
+Reader is trying to enter
+1 Reader(s) are inside
+Writer is trying to enter
+Reader is leaving
+Writer has entered
+Writer is leaving
+
+------------------------------------------------------------
+KEY POINTS:
+------------------------------------------------------------
+- Multiple readers can read concurrently.
+- Writers have exclusive access — no reader/writer can enter when a writer is active.
+- Synchronization is achieved using **mutex locks**.
+- Simulates real-world scenarios like database read/write concurrency control.
+
+------------------------------------------------------------
+ADVANTAGE:
+------------------------------------------------------------
+- Prevents data inconsistency in concurrent environments.
+- Allows high concurrency when multiple readers are active.
+
+DISADVANTAGE:
+------------------------------------------------------------
+- May cause **writer starvation** (writers might wait indefinitely 
+  if readers keep coming continuously).
+
+------------------------------------------------------------
+*/
+
