@@ -102,3 +102,118 @@ while true; do
         *) echo "Invalid choice. Please select 1-6." ;;
     esac
 done
+
+: '
+------------------------------------------------------------
+📘 SHELL SCRIPT DOCUMENTATION — ADDRESS BOOK MANAGEMENT SYSTEM
+------------------------------------------------------------
+
+🔹 SCRIPT PURPOSE:
+   This shell script provides a simple **menu-driven Address Book System**
+   that allows users to perform CRUD operations (Create, Read, Update, Delete)
+   on a text file named **addressbook.txt**.
+
+   The address book stores records in the format:
+       LastName,FirstName,Email,Phone
+
+------------------------------------------------------------
+⚙️ LOGIC / ALGORITHM USED:
+
+1️⃣ **File Setup**
+   - The script uses a text file (`addressbook.txt`) as the database.
+   - If the file doesn’t exist, it can be created using the “Create Address Book” option.
+
+2️⃣ **Menu System (Infinite Loop)**
+   - The `while true` loop continuously displays a menu with options 1–6.
+   - The user selects an option, and the corresponding function is called using a `case` statement.
+
+3️⃣ **Function Descriptions**
+
+   ➤ **createAddressBook()**
+      - Checks if `addressbook.txt` exists.
+      - If not, creates the file using `touch`.
+      - Displays confirmation message.
+
+   ➤ **viewAddressBook()**
+      - Displays the entire address book contents using `cat`.
+      - Checks if the file exists and is not empty using `[ -s "$FILE" ]`.
+
+   ➤ **insertRecord()**
+      - Prompts user to enter details in format:
+          LastName,FirstName,Email,Phone
+      - Appends the record to the file using `>>`.
+
+   ➤ **deleteRecord()**
+      - Searches for a specific keyword (name or email) using `grep -n` (with line numbers).
+      - Displays matching lines.
+      - Prompts user to enter the line number to delete.
+      - Deletes that line using `sed -i "${line}d"`.
+
+   ➤ **modifyRecord()**
+      - Searches for a record using `grep -n`.
+      - Displays all matching records.
+      - User selects a line number to modify.
+      - Prompts for a new record (same format).
+      - Updates the selected line using `sed -i "${line}s/.*/$newRecord/"`.
+
+   ➤ **exitProgram()**
+      - Prints an exit message and terminates the script using `exit 0`.
+
+4️⃣ **Error Handling**
+   - Checks if the file exists and is not empty before delete/modify/view.
+   - Ensures that only valid choices (1–6) are accepted.
+
+------------------------------------------------------------
+📊 EXAMPLE EXECUTION:
+
+Example Run:
+---------------
+$ bash addressbook.sh
+
+==============================
+     Address Book Menu
+==============================
+1. Create Address Book
+2. View Address Book
+3. Insert a Record
+4. Delete a Record
+5. Modify a Record
+6. Exit
+==============================
+Enter your choice: 1
+Address book created.
+
+Enter your choice: 3
+Enter record in format: LastName,FirstName,Email,Phone
+Doe,John,john.doe@example.com,9876543210
+Record inserted.
+
+Enter your choice: 2
+---- Address Book ----
+Doe,John,john.doe@example.com,9876543210
+
+Enter your choice: 4
+Enter a search string (e.g. name or email) to find the record to delete:
+John
+1:Doe,John,john.doe@example.com,9876543210
+Enter line number to delete:
+1
+Record deleted.
+
+Enter your choice: 6
+Exiting... Goodbye!
+
+------------------------------------------------------------
+✅ SUMMARY:
+   ➤ Script Type: Menu-driven Bash Script
+   ➤ File Used: addressbook.txt
+   ➤ Features:
+       • Create address book file
+       • View records
+       • Insert new record
+       • Delete specific record
+       • Modify existing record
+   ➤ Key Commands Used:
+       touch, cat, grep, sed, read, case, if-else
+------------------------------------------------------------
+'
