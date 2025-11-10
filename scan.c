@@ -95,4 +95,93 @@ int main() {
  
     printf("\nTotal head movement: %d\n", total); 
     return 0; 
+
 } 
+
+/*
+--------------------------------------------------------------------------------
+Program: SCAN Disk Scheduling Algorithm (Elevator Algorithm)
+--------------------------------------------------------------------------------
+Algorithm Used:
+    The program implements the **SCAN Disk Scheduling Algorithm**, also known as 
+    the **Elevator Algorithm**, used in Operating Systems for managing disk I/O 
+    requests efficiently.
+
+Concept:
+    - In SCAN scheduling, the disk arm (head) moves in one direction (either 
+      towards higher or lower cylinder numbers), servicing all pending requests 
+      in that direction until it reaches the end (or the last request in that 
+      direction). 
+    - After reaching the end, it reverses its direction and continues servicing 
+      the requests in the opposite direction — similar to an elevator moving up 
+      and down a building, hence the name “Elevator Algorithm”.
+
+--------------------------------------------------------------------------------
+Logic Explanation:
+1. **Inputs:**
+       - Number of disk requests (n)
+       - Request queue (list of requested tracks)
+       - Initial head position
+       - Total disk size
+       - Head movement direction 
+         (1 → moving toward higher tracks, 0 → moving toward lower tracks)
+
+2. **Step-by-Step Logic:**
+       a. Separate the requests into two arrays:
+          - `left[]` → requests less than head position
+          - `right[]` → requests greater than or equal to head position
+
+       b. Sort both `left` and `right` arrays in ascending order.
+
+       c. Depending on the direction:
+          - **If direction = 1 (high):**
+              • Move from current head to all requests in `right[]` (in order).
+              • Then move to the end of the disk (`disk_size - 1`).
+              • Reverse direction and service all requests in `left[]` 
+                (from largest to smallest).
+          
+          - **If direction = 0 (low):**
+              • Move from current head to all requests in `left[]` (in reverse order).
+              • Then move to track 0 (start of disk).
+              • Reverse direction and service all requests in `right[]`
+                (in ascending order).
+
+       d. Each move adds the absolute distance between the current head position 
+          and the next request to the total head movement.
+
+3. **Output:**
+       - The sequence of serviced tracks (seek sequence)
+       - The total head movement (total seek distance)
+
+--------------------------------------------------------------------------------
+Example Input/Output:
+
+Input:
+    Enter number of disk requests: 8
+    Enter disk requests: 98 183 37 122 14 124 65 67
+    Enter initial head position: 53
+    Enter total disk size: 200
+    Enter head movement direction (1 for high, 0 for low): 1
+
+Output:
+    SCAN Disk Scheduling Algorithm:
+    Initial head position: 53
+    Seek Sequence: 53 -> 65 -> 67 -> 98 -> 122 -> 124 -> 183 -> 199 -> 37 -> 14
+    Total head movement: 331
+
+--------------------------------------------------------------------------------
+Explanation of Output:
+    - The head starts at 53 and moves toward higher track numbers.
+    - It services all higher requests (65, 67, 98, 122, 124, 183) first.
+    - Then it moves to the end (199), reverses direction, and services 
+      the remaining lower requests (37, 14).
+    - The total head movement is the sum of all seek distances.
+
+--------------------------------------------------------------------------------
+Summary:
+    - The SCAN algorithm reduces total seek time compared to FCFS 
+      by servicing requests in an ordered path.
+    - It provides better performance and fairness since the head moves 
+      systematically across the disk in both directions.
+--------------------------------------------------------------------------------
+*/
