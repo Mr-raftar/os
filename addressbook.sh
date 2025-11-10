@@ -104,6 +104,13 @@ while true; do
 done
 
 : '
+4️⃣ Give execution permission:
+   chmod +x addressbook.sh
+
+5️⃣ Run the script:
+   ./addressbook.sh
+   (or)
+   bash addressbook.sh
 ------------------------------------------------------------
 📘 SHELL SCRIPT DOCUMENTATION — ADDRESS BOOK MANAGEMENT SYSTEM
 ------------------------------------------------------------
