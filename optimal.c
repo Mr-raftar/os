@@ -83,4 +83,83 @@ int main() {
     printf("\n\nTotal Page Faults = %d", faults); 
  
     return 0; 
+
 } 
+
+/*
+------------------------------------------------------------
+PROGRAM EXPLANATION:
+------------------------------------------------------------
+This program implements the **Optimal Page Replacement Algorithm** used in 
+operating systems for managing memory pages.
+
+------------------------------------------------------------
+ALGORITHM USED: Optimal Page Replacement Algorithm
+------------------------------------------------------------
+→ The Optimal Page Replacement algorithm replaces the page 
+  that will not be used for the longest period of time in the future.
+
+→ It minimizes the number of page faults by making the best 
+  possible replacement decision — but it requires knowledge 
+  of future page references (hence "optimal").
+
+------------------------------------------------------------
+LOGIC / WORKING OF THE PROGRAM:
+------------------------------------------------------------
+1. The user enters:
+     - Number of frames (memory slots)
+     - Number of pages (page reference string length)
+     - The sequence of page references
+
+2. The algorithm checks each page in the reference string:
+   a) If the page is already present in a frame → No page fault.
+   b) If not present:
+        - If an empty frame is available → place the page.
+        - Otherwise → find the page that will not be used for the longest 
+          time in the future (or not at all) and replace it.
+        - Increase the page fault count.
+
+3. After each page reference, the program prints the current 
+   frame contents for visualization.
+
+4. Finally, it displays the **total number of page faults**.
+
+------------------------------------------------------------
+EXAMPLE INPUT / OUTPUT:
+------------------------------------------------------------
+Example Input:
+---------------
+Enter number of frames: 3
+Enter number of pages: 12
+Enter page reference string: 
+7 0 1 2 0 3 0 4 2 3 0 3
+
+Example Output:
+---------------
+7	-	-
+7	0	-
+7	0	1
+2	0	1
+2	0	1
+2	3	1
+2	3	0
+4	3	0
+4	2	0
+4	2	3
+0	2	3
+0	2	3
+
+Total Page Faults = 9
+
+------------------------------------------------------------
+ADVANTAGE:
+------------------------------------------------------------
+- Produces the minimum number of page faults among all algorithms.
+
+DISADVANTAGE:
+------------------------------------------------------------
+- Not practical for real-time systems because it requires 
+  future knowledge of page references.
+
+------------------------------------------------------------
+*/
